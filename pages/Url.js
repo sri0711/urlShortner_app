@@ -10,6 +10,7 @@ import {
 	View
 } from 'react-native';
 import axios from 'axios';
+import SvgQRCode from 'react-native-qrcode-svg';
 
 function Url({ navigation, route }) {
 	const [mainData, setMainData] = useState();
@@ -52,7 +53,18 @@ export default Url;
 const mainBody = ({ mainData, navigation }) => {
 	return (
 		<View>
-			<Text>{mainData.data.url}</Text>
+			<Text style={urlStyle.webAddress}>{mainData.data.url}</Text>
+			<SvgQRCode
+				size={250}
+				value={`https://allakai.cf/${mainData.data.short}`}
+			/>
+			<View>
+				<Text style={urlStyle.time}>
+					{mainData.data.expirydate + `-` + mainData.data.expirytime}
+				</Text>
+			</View>
+
+			{/* return to home */}
 			<View style={{ alignSelf: 'center' }}>
 				<TouchableOpacity style={urlStyle.button}>
 					{Platform.OS === 'android' ? (
@@ -83,17 +95,12 @@ const mainBody = ({ mainData, navigation }) => {
 const LoadingAnime = (navigation) => {
 	return (
 		<View>
-			<ActivityIndicator
-				size={'large'}
-				color={'#f80000'}
-				style={{ margin: '20%' }}
-			/>
-
+			<ActivityIndicator size={'large'} color={'#f80000'} />
 			<View style={{ alignSelf: 'center' }}>
 				<TouchableOpacity style={urlStyle.button}>
 					{Platform.OS === 'android' ? (
 						<Text
-							style={{ color: '#EEF2FF', padding: 10 }}
+							style={{ color: '#EEF2FF' }}
 							onPress={() => {
 								navigation.navigate('Home');
 							}}
@@ -124,7 +131,8 @@ const urlStyle = StyleSheet.create({
 	body: {
 		display: 'flex',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		flex: 1
 	},
 	header: {
 		backgroundColor: '#f80000',
@@ -143,5 +151,18 @@ const urlStyle = StyleSheet.create({
 		backgroundColor: '#f80000',
 		margin: 30,
 		borderRadius: 10
+	},
+	webAddress: {
+		color: '#f80000',
+		fontSize: 25,
+		alignSelf: 'center',
+		fontWeight: '600',
+		marginBottom: 20
+	},
+	time: {
+		color: '#f80000',
+		fontSize: 15,
+		marginTop: 15,
+		alignSelf: 'center'
 	}
 });
