@@ -4,6 +4,7 @@ import {
 	Button,
 	Platform,
 	SafeAreaView,
+	Share,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -19,7 +20,8 @@ function Url({ navigation, route }) {
 	}, []);
 	const fetchData = async () => {
 		const inputs = {
-			url: route.params.url
+			url: route.params.url,
+			hrs: 3
 		};
 		const config = {
 			url: 'https://apiurls.herokuapp.com/api',
@@ -51,6 +53,12 @@ function Url({ navigation, route }) {
 export default Url;
 
 const mainBody = ({ mainData, navigation }) => {
+	const ClickShare = () => {
+		const shareOptions = {
+			message: `Thank you for Choosing our App, Please Click the URL Fallow Your Link https://allakai.cf/${mainData.data.short}/ . It will be active until ${mainData.data.expirydate} ${mainData.data.expirytime} In Utc`
+		};
+		Share.share(shareOptions);
+	};
 	return (
 		<View>
 			<Text style={urlStyle.webAddress}>{mainData.data.url}</Text>
@@ -60,10 +68,37 @@ const mainBody = ({ mainData, navigation }) => {
 			/>
 			<View>
 				<Text style={urlStyle.time}>
-					{mainData.data.expirydate + `-` + mainData.data.expirytime}
+					{'until valid ' +
+						mainData.data.expirydate +
+						`-` +
+						mainData.data.expirytime +
+						' UTC'}
 				</Text>
 			</View>
-
+			{/* share url to any app */}
+			<View style={{ alignSelf: 'center' }}>
+				<TouchableOpacity style={urlStyle.button}>
+					{Platform.OS === 'android' ? (
+						<Text
+							style={{ color: '#EEF2FF', padding: 10 }}
+							onPress={() => {
+								ClickShare();
+							}}
+						>
+							Share
+						</Text>
+					) : (
+						<Button
+							title='Share'
+							color={'#EEF2FF'}
+							fontWeight={'600'}
+							onPress={() => {
+								ClickShare();
+							}}
+						/>
+					)}
+				</TouchableOpacity>
+			</View>
 			{/* return to home */}
 			<View style={{ alignSelf: 'center' }}>
 				<TouchableOpacity style={urlStyle.button}>
