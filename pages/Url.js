@@ -23,6 +23,9 @@ function Url({ navigation, route }) {
 			url: route.params.url,
 			hrs: 3
 		};
+		if(inputs.url==="chatBegin"){
+			navigation.navigate("Chat");
+		}
 		const config = {
 			url: 'https://apiurls.herokuapp.com/api',
 			method: 'Post',

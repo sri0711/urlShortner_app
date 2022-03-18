@@ -32,6 +32,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "this is my first react native project"
+    "description": "bug fixed "
   }
 }
