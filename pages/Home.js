@@ -36,7 +36,7 @@ function Home({ navigation }) {
 										navigation.navigate('Url', { url: Inpvalue });
 									}}
 								>
-									Short The Url
+									Short The Link
 								</Text>
 							) : (
 								<Button
